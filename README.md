@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Bookings
 
 Wanna run it locally?
 
