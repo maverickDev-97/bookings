@@ -8,6 +8,7 @@ import { useAppSelector } from "@/store/hooks";
 import { deleteBooking } from "@features/Bookings/store/bookingsSlice";
 
 import type { Booking } from "@features/Bookings/types/Booking";
+import { Button } from "@/components/Button/Button";
 
 export const Bookings: FC = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export const Bookings: FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Bookings</h1>
       {bookings.length === 0 ? (
         <>
@@ -55,7 +56,7 @@ export const Bookings: FC = () => {
           ))}
         </>
       )}
-      <button onClick={handleAddBooking}>Add booking</button>
+      <Button onClick={handleAddBooking} title="Add booking" />
       <Modal open={showForm} onClose={handleCloseForm}>
         <BookingForm
           onClose={handleCloseForm}

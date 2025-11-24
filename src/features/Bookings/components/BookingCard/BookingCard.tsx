@@ -2,6 +2,7 @@ import type { FC } from "react";
 import type { Booking } from "@features/Bookings/types/Booking";
 import { formatDate, countDuration } from "@features/Bookings/utils/dateUtils";
 import styles from "./BookingCard.module.css";
+import { Button } from "@/components/Button/Button";
 
 interface BookingCardProps {
   booking: Booking;
@@ -28,8 +29,16 @@ export const BookingCard: FC<BookingCardProps> = ({
         </span>
       </div>
       <div>
-        <button onClick={() => onEdit(booking)}>Edit</button>
-        <button onClick={() => onDelete(booking.id)}>Delete</button>
+        <Button
+          title="Edit"
+          onClick={() => onEdit(booking)}
+          variant="secondary"
+        />
+        <Button
+          title="Delete"
+          onClick={() => onDelete(booking.id)}
+          variant="secondary"
+        />
       </div>
     </div>
   );

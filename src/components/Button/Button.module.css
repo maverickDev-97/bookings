@@ -1,0 +1,20 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #40caa1;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.buttonPrimary {
+  background-color: #40caa1;
+  color: #fff;
+}
+
+.buttonSecondary {
+  background-color: transparent;
+  color: #40caa1;
+}

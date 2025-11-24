@@ -13,6 +13,7 @@ import {
 } from "@features/Bookings/utils/dateUtils";
 import { useAppSelector } from "@/store/hooks";
 import type { Booking } from "@features/Bookings/types/Booking";
+import { Button } from "@/components/Button/Button";
 
 interface BookingFormProps {
   editingBooking: Booking | null;
@@ -157,10 +158,12 @@ export const BookingForm: FC<BookingFormProps> = ({
       </div>
       {/* Buttons */}
       <div>
-        <button onClick={handleSubmit}>
-          {editingBooking ? "Save changes" : "Add new booking"}
-        </button>
-        <button onClick={onClose}>Cancel</button>
+        <Button
+          title={editingBooking ? "Save changes" : "Add new booking"}
+          onClick={handleSubmit}
+          variant="primary"
+        />
+        <Button title="Cancel" onClick={onClose} variant="secondary" />
       </div>
     </div>
   );
