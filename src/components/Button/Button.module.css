@@ -7,6 +7,7 @@
   border: 1px solid #40caa1;
   cursor: pointer;
   font-weight: 700;
+  transition: all 0.2s linear;
 }
 
 .buttonPrimary {
@@ -27,6 +28,14 @@
 .buttonSmall {
   padding: 0.25rem 0.875rem;
   font-size: 0.75rem;
+}
+
+.buttonPrimary:hover {
+  background-color: #2eaa85;
+}
+
+.buttonSecondary:hover {
+  background-color: #c8f7e9;
 }
 
 @media screen and (max-width: 480px) {

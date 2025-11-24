@@ -24,7 +24,7 @@ export const BookingCard: FC<BookingCardProps> = ({
         {formatDate(booking.startDate)} - {formatDate(booking.endDate)}
       </span>
       <div>
-        <span className={styles.cardSubtitle}>
+        <span className={styles.duration}>
           {duration} night{duration !== 1 ? "s" : ""}
         </span>
       </div>
