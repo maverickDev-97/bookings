@@ -23,7 +23,7 @@ export const Bookings: FC = () => {
       ) : (
         <>
           {bookings?.map((booking) => (
-            <BookingCard key={booking.id} {...booking} />
+            <BookingCard key={booking.id} booking={booking} />
           ))}
         </>
       )}

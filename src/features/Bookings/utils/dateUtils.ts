@@ -51,3 +51,17 @@ export const validateDates = (
 
   return errors;
 };
+
+export const formatDate = (dateString: string): string => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+export const countDuration = (booking: Booking): number => {
+  const start = new Date(booking.startDate);
+  const end = new Date(booking.endDate);
+  return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+};
