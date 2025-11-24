@@ -1,7 +1,12 @@
+import { Bookings } from "./features/Bookings/Bookings";
 import "./App.css";
 
 function App() {
-  return <>Hostfully</>;
+  return (
+    <>
+      <Bookings />
+    </>
+  );
 }
 
 export default App;
