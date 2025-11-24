@@ -1,3 +1,25 @@
 .card {
-  border: 1px solid #cbc8c8;
+  border: 1px solid #e7e6e6;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.cardSubtitle {
+  font-size: 0.875rem;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  padding: 0.25rem 1.25rem;
 }

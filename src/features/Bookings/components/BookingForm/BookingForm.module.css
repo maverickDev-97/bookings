@@ -38,5 +38,14 @@
 .buttons {
   display: flex;
   gap: 0.75rem;
-  padding-top: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+  .buttons {
+    flex-wrap: wrap;
+  }
+
+  .buttons > button {
+    width: 100%;
+  }
 }

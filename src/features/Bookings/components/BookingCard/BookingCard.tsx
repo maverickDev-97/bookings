@@ -19,25 +19,27 @@ export const BookingCard: FC<BookingCardProps> = ({
 
   return (
     <div className={styles.card}>
-      <h2>{booking?.propertyName}</h2>
-      <span>
+      <h2 className={styles.cardTitle}>{booking?.propertyName}</h2>
+      <span className={styles.cardSubtitle}>
         {formatDate(booking.startDate)} - {formatDate(booking.endDate)}
       </span>
       <div>
-        <span>
+        <span className={styles.cardSubtitle}>
           {duration} night{duration !== 1 ? "s" : ""}
         </span>
       </div>
-      <div>
+      <div className={styles.buttons}>
         <Button
           title="Edit"
           onClick={() => onEdit(booking)}
           variant="secondary"
+          size="small"
         />
         <Button
           title="Delete"
           onClick={() => onDelete(booking.id)}
           variant="secondary"
+          size="small"
         />
       </div>
     </div>

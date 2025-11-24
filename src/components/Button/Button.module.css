@@ -1,8 +1,8 @@
 .button {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   border: 1px solid #40caa1;
   cursor: pointer;
@@ -17,4 +17,21 @@
 .buttonSecondary {
   background-color: transparent;
   color: #40caa1;
+}
+
+.buttonBig {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.buttonSmall {
+  padding: 0.25rem 0.875rem;
+  font-size: 0.75rem;
+}
+
+@media screen and (max-width: 480px) {
+  .buttonBig {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
 }
