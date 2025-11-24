@@ -19,13 +19,6 @@ export const Bookings: FC = () => {
       {bookings.length === 0 ? (
         <>
           <h3>No bookings yet</h3>
-          <button
-            onClick={() => {
-              setShowAddForm((prevState) => !prevState);
-            }}
-          >
-            Add booking
-          </button>
         </>
       ) : (
         <>
@@ -34,6 +27,13 @@ export const Bookings: FC = () => {
           ))}
         </>
       )}
+      <button
+        onClick={() => {
+          setShowAddForm((prevState) => !prevState);
+        }}
+      >
+        Add booking
+      </button>
       <Modal open={showAddForm} onClose={toggleAddForm}>
         <AddBookingForm onClose={toggleAddForm} />
       </Modal>

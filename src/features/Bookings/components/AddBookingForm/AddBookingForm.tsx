@@ -2,24 +2,33 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAvailableProperties } from "@features/Bookings/api/requests/getAvaliableProperties";
 import { Property } from "@features/Bookings/types/Property";
+import { ValidationError } from "@features/Bookings/types/ValidationError";
 import { addBooking } from "@features/Bookings/store/bookingsSlice";
+import {
+  checkOverlap,
+  validateDates,
+} from "@features/Bookings/utils/dateUtils";
+import { useAppSelector } from "@/store/hooks";
 
 interface AddBookingFormProps {
   onClose: () => void;
 }
 
 export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
+  const bookings = useAppSelector((state) => state.bookingsReducer.bookings);
   const dispatch = useDispatch();
+
   const [availableProperties, setAvailableProperties] = useState<Property[]>(
     []
   );
 
   const [formData, setFormData] = useState({
     propertyName: "",
-    guest: "",
     startDate: "",
     endDate: "",
   });
+
+  const [errors, setErrors] = useState<ValidationError[]>([]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -28,7 +37,26 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
   };
 
   const handleSubmit = () => {
+    setErrors([]);
+
+    if (!formData.propertyName) {
+      setErrors([{ message: "Please select a property" }]);
+      return;
+    }
+
+    const dateErrors = validateDates(formData.startDate, formData.endDate);
+    if (dateErrors.length > 0) {
+      setErrors(dateErrors);
+      return;
+    }
+
+    if (checkOverlap(formData, bookings)) {
+      setErrors([{ message: "There is already a booking for these days" }]);
+      return;
+    }
+
     dispatch(addBooking(formData));
+    onClose();
   };
 
   useEffect(() => {
@@ -57,17 +85,6 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
           ))}
         </select>
       </div>
-      {/* Guest */}
-      <div>
-        <label>Guest</label>
-        <input
-          type="text"
-          name="guest"
-          value={formData.guest}
-          onChange={handleChange}
-          placeholder="Guest name"
-        />
-      </div>
       {/* Start date */}
       <div>
         <label>Start Date</label>
@@ -88,6 +105,27 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
           onChange={handleChange}
         />
       </div>
+      {/* Errors */}
+      <div>
+        {errors.length > 0 && (
+          <div>
+            <div>
+              <div
+                style={{
+                  flex: 1,
+                  backgroundColor: "#f2c2c4",
+                  color: "#d9161f",
+                }}
+              >
+                {errors.map((error, idx) => (
+                  <p key={idx}>{error.message}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      {/* Buttons */}
       <div>
         <button onClick={handleSubmit}>Add new booking</button>
         <button onClick={onClose}>Cancel</button>

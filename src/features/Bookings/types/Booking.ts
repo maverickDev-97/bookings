@@ -3,5 +3,4 @@ export interface Booking {
   startDate: string;
   endDate: string;
   propertyName: string;
-  guest: string;
 }
