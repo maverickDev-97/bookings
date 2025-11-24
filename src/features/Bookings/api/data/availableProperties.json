@@ -1,14 +1,14 @@
 [
   {
-    "id": 1,
-    "propertyName": "Radisson Blu"
+    "id": "radis-1",
+    "name": "Radisson Blu"
   },
   {
-    "id": 2,
-    "propertyName": "Hilton"
+    "id": "hilt-2",
+    "name": "Hilton"
   },
   {
-    "id": 3,
-    "propertyName": "Hyatt"
+    "id": "hy-3",
+    "name": "Hyatt"
   }
 ]

@@ -35,7 +35,7 @@ export const Bookings: FC = () => {
         </>
       )}
       <Modal open={showAddForm} onClose={toggleAddForm}>
-        <AddBookingForm />
+        <AddBookingForm onClose={toggleAddForm} />
       </Modal>
     </div>
   );
