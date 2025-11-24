@@ -1,0 +1,42 @@
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.formContainer {
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.errorWrapper {
+  background-color: #f2c2c4;
+  border: 1px solid #d9161f;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.formElement {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}

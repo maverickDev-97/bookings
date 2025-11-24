@@ -14,6 +14,7 @@ import {
 import { useAppSelector } from "@/store/hooks";
 import type { Booking } from "@features/Bookings/types/Booking";
 import { Button } from "@/components/Button/Button";
+import styles from "./BookingForm.module.css";
 
 interface BookingFormProps {
   editingBooking: Booking | null;
@@ -84,86 +85,93 @@ export const BookingForm: FC<BookingFormProps> = ({
 
   return (
     <div>
-      <h2>{editingBooking ? "Edit Booking" : "Add New Booking"}</h2>
+      <h2 className={styles.title}>
+        {editingBooking ? "Edit Booking" : "Add New Booking"}
+      </h2>
       {/* Property */}
-      <div>
-        <label>Property</label>
-        <select
-          disabled={availableProperties?.length === 0}
-          onChange={handleChange}
-          name="propertyName"
-          value={formData.propertyName}
-        >
-          {availableProperties?.length === 0 ? (
-            <option value="" disabled={availableProperties?.length !== 0}>
-              Loading...
-            </option>
-          ) : (
-            <>
-              <option value="" disabled>
-                Choose property
+      <div className={styles.formContainer}>
+        <div className={styles.formElement}>
+          <label className={styles.label}>Property</label>
+          <select
+            className={styles.input}
+            disabled={availableProperties?.length === 0}
+            onChange={handleChange}
+            name="propertyName"
+            value={formData.propertyName}
+          >
+            {availableProperties?.length === 0 ? (
+              <option value="" disabled={availableProperties?.length !== 0}>
+                Loading...
               </option>
-              {availableProperties?.map((property) => (
-                <option
-                  key={property?.id}
-                  value={property?.name}
-                  id={property?.id}
-                >
-                  {property?.name}
+            ) : (
+              <>
+                <option value="" disabled>
+                  Choose property
                 </option>
-              ))}
-            </>
-          )}
-        </select>
-      </div>
-      {/* Start date */}
-      <div>
-        <label>Start Date</label>
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate}
-          onChange={handleChange}
-        />
-      </div>
-      {/* End date */}
-      <div>
-        <label>End Date</label>
-        <input
-          type="date"
-          name="endDate"
-          value={formData.endDate}
-          onChange={handleChange}
-        />
-      </div>
-      {/* Errors */}
-      <div>
-        {errors.length > 0 && (
-          <div>
-            <div>
-              <div
-                style={{
-                  flex: 1,
-                  backgroundColor: "#f2c2c4",
-                  color: "#d9161f",
-                }}
-              >
-                {errors.map((error, index) => (
-                  <p key={index}>{error.message}</p>
+                {availableProperties?.map((property) => (
+                  <option
+                    key={property?.id}
+                    value={property?.name}
+                    id={property?.id}
+                  >
+                    {property?.name}
+                  </option>
                 ))}
+              </>
+            )}
+          </select>
+        </div>
+        {/* Start date */}
+        <div className={styles.formElement}>
+          <label className={styles.label}>Start Date</label>
+          <input
+            className={styles.input}
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+          />
+        </div>
+        {/* End date */}
+        <div className={styles.formElement}>
+          <label className={styles.label}>End Date</label>
+          <input
+            className={styles.input}
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+          />
+        </div>
+        {/* Errors */}
+        <div>
+          {errors.length > 0 && (
+            <div className={styles.errorWrapper}>
+              <div>
+                <div
+                  style={{
+                    flex: 1,
+                    backgroundColor: "#f2c2c4",
+                    color: "#d9161f",
+                  }}
+                >
+                  {errors.map((error, index) => (
+                    <p key={index}>{error.message}</p>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-      {/* Buttons */}
-      <div>
-        <Button
-          title={editingBooking ? "Save changes" : "Add new booking"}
-          onClick={handleSubmit}
-          variant="primary"
-        />
-        <Button title="Cancel" onClick={onClose} variant="secondary" />
+          )}
+        </div>
+        {/* Buttons */}
+        <div className={styles.buttons}>
+          <Button
+            title={editingBooking ? "Save changes" : "Add new booking"}
+            onClick={handleSubmit}
+            variant="primary"
+          />
+          <Button title="Cancel" onClick={onClose} variant="secondary" />
+        </div>
       </div>
     </div>
   );
