@@ -1,18 +1,21 @@
 import { FC, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { getAvailableProperties } from "@features/Bookings/api/requests/getAvaliableProperties";
 import { Property } from "@features/Bookings/types/Property";
+import { addBooking } from "@features/Bookings/store/bookingsSlice";
 
 interface AddBookingFormProps {
   onClose: () => void;
 }
 
 export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
+  const dispatch = useDispatch();
   const [availableProperties, setAvailableProperties] = useState<Property[]>(
     []
   );
 
   const [formData, setFormData] = useState({
-    property: "",
+    propertyName: "",
     guest: "",
     startDate: "",
     endDate: "",
@@ -22,6 +25,10 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    dispatch(addBooking(formData));
   };
 
   useEffect(() => {
@@ -37,8 +44,8 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
         <select
           disabled={availableProperties?.length === 0}
           onChange={handleChange}
-          name="property"
-          value={formData.property}
+          name="propertyName"
+          value={formData.propertyName}
         >
           <option value="" disabled={availableProperties?.length !== 0}>
             Choose property
@@ -82,7 +89,7 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
         />
       </div>
       <div>
-        <button>Add new booking</button>
+        <button onClick={handleSubmit}>Add new booking</button>
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>

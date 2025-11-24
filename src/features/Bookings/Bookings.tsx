@@ -2,11 +2,11 @@ import { FC, useState } from "react";
 
 import { BookingCard } from "@features/Bookings/components/BookingCard/BookingCard";
 import { AddBookingForm } from "@features/Bookings/components/AddBookingForm/AddBookingForm";
-import { Booking } from "@features/Bookings/types/Booking";
 import { Modal } from "@/components/Modal/Modal";
+import { useAppSelector } from "@/store/hooks";
 
 export const Bookings: FC = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const bookings = useAppSelector((state) => state.bookingsReducer.bookings);
   const [showAddForm, setShowAddForm] = useState(false);
 
   const toggleAddForm = () => {
