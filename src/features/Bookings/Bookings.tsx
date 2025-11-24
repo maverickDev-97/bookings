@@ -1,19 +1,16 @@
 import { FC, useState } from "react";
+
 import { BookingCard } from "@features/Bookings/components/BookingCard/BookingCard";
+import { AddBookingForm } from "@features/Bookings/components/AddBookingForm/AddBookingForm";
 import { Booking } from "@features/Bookings/types/Booking";
+import { Modal } from "@/components/Modal/Modal";
 
 export const Bookings: FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
 
-  const addBooking = () => {
-    const newBooking: Booking = {
-      endDate: new Date(),
-      startDate: new Date(),
-      propertyName: `Property ${bookings.length}`,
-      id: crypto.randomUUID(),
-    };
-
-    setBookings((prevState) => [...prevState, newBooking]);
+  const toggleAddForm = () => {
+    setShowAddForm((prevState) => !prevState);
   };
 
   return (
@@ -22,7 +19,13 @@ export const Bookings: FC = () => {
       {bookings.length === 0 ? (
         <>
           <h3>No bookings yet</h3>
-          <button onClick={addBooking}>Add booking</button>
+          <button
+            onClick={() => {
+              setShowAddForm((prevState) => !prevState);
+            }}
+          >
+            Add booking
+          </button>
         </>
       ) : (
         <>
@@ -31,6 +34,9 @@ export const Bookings: FC = () => {
           ))}
         </>
       )}
+      <Modal open={showAddForm} onClose={toggleAddForm}>
+        <AddBookingForm />
+      </Modal>
     </div>
   );
 };
