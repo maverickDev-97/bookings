@@ -28,9 +28,16 @@ export const bookingsSlice = createSlice({
         ),
       };
     },
+    editBooking: (state: BookingsState, action: { payload: Booking }) => {
+      return {
+        bookings: state.bookings.map((booking) =>
+          booking.id === action.payload.id ? action.payload : booking
+        ),
+      };
+    },
   },
 });
 
-export const { addBooking, deleteBooking } = bookingsSlice.actions;
+export const { addBooking, deleteBooking, editBooking } = bookingsSlice.actions;
 
 export default bookingsSlice.reducer;

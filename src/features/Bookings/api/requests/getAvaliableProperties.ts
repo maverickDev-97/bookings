@@ -5,6 +5,6 @@ export async function getAvailableProperties(): Promise<Property[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
-    }, 2000);
+    }, 300);
   });
 }

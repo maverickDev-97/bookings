@@ -3,18 +3,26 @@ import { useDispatch } from "react-redux";
 import { getAvailableProperties } from "@features/Bookings/api/requests/getAvaliableProperties";
 import { Property } from "@features/Bookings/types/Property";
 import { ValidationError } from "@features/Bookings/types/ValidationError";
-import { addBooking } from "@features/Bookings/store/bookingsSlice";
+import {
+  addBooking,
+  editBooking,
+} from "@features/Bookings/store/bookingsSlice";
 import {
   checkOverlap,
   validateDates,
 } from "@features/Bookings/utils/dateUtils";
 import { useAppSelector } from "@/store/hooks";
+import type { Booking } from "@features/Bookings/types/Booking";
 
-interface AddBookingFormProps {
+interface BookingFormProps {
+  editingBooking: Booking | null;
   onClose: () => void;
 }
 
-export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
+export const BookingForm: FC<BookingFormProps> = ({
+  onClose,
+  editingBooking,
+}) => {
   const bookings = useAppSelector((state) => state.bookingsReducer.bookings);
   const dispatch = useDispatch();
 
@@ -23,9 +31,9 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
   );
 
   const [formData, setFormData] = useState({
-    propertyName: "",
-    startDate: "",
-    endDate: "",
+    propertyName: editingBooking?.propertyName || "",
+    startDate: editingBooking?.startDate || "",
+    endDate: editingBooking?.endDate || "",
   });
 
   const [errors, setErrors] = useState<ValidationError[]>([]);
@@ -50,12 +58,22 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
       return;
     }
 
-    if (checkOverlap(formData, bookings)) {
+    if (checkOverlap(formData, bookings, editingBooking?.id)) {
       setErrors([{ message: "There is already a booking for these days" }]);
       return;
     }
 
-    dispatch(addBooking(formData));
+    if (editingBooking) {
+      dispatch(
+        editBooking({
+          ...formData,
+          id: editingBooking.id,
+        })
+      );
+    } else {
+      dispatch(addBooking(formData));
+    }
+
     onClose();
   };
 
@@ -65,7 +83,7 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
 
   return (
     <div>
-      <h2>Add New Booking</h2>
+      <h2>{editingBooking ? "Edit Booking" : "Add New Booking"}</h2>
       {/* Property */}
       <div>
         <label>Property</label>
@@ -75,14 +93,26 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
           name="propertyName"
           value={formData.propertyName}
         >
-          <option value="" disabled={availableProperties?.length !== 0}>
-            Choose property
-          </option>
-          {availableProperties?.map((property) => (
-            <option key={property?.id} value={property?.name} id={property?.id}>
-              {property?.name}
+          {availableProperties?.length === 0 ? (
+            <option value="" disabled={availableProperties?.length !== 0}>
+              Loading...
             </option>
-          ))}
+          ) : (
+            <>
+              <option value="" disabled>
+                Choose property
+              </option>
+              {availableProperties?.map((property) => (
+                <option
+                  key={property?.id}
+                  value={property?.name}
+                  id={property?.id}
+                >
+                  {property?.name}
+                </option>
+              ))}
+            </>
+          )}
         </select>
       </div>
       {/* Start date */}
@@ -117,8 +147,8 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
                   color: "#d9161f",
                 }}
               >
-                {errors.map((error, idx) => (
-                  <p key={idx}>{error.message}</p>
+                {errors.map((error, index) => (
+                  <p key={index}>{error.message}</p>
                 ))}
               </div>
             </div>
@@ -127,7 +157,9 @@ export const AddBookingForm: FC<AddBookingFormProps> = ({ onClose }) => {
       </div>
       {/* Buttons */}
       <div>
-        <button onClick={handleSubmit}>Add new booking</button>
+        <button onClick={handleSubmit}>
+          {editingBooking ? "Save changes" : "Add new booking"}
+        </button>
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>

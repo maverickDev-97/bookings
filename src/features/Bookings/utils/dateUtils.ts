@@ -3,12 +3,15 @@ import type { ValidationError } from "@features/Bookings/types/ValidationError";
 
 export const checkOverlap = (
   newBooking: Omit<Booking, "id"> | Booking,
-  existingBookings: Booking[]
+  existingBookings: Booking[],
+  editingId?: string
 ): boolean => {
   const newStart = new Date(newBooking.startDate);
   const newEnd = new Date(newBooking.endDate);
 
   return existingBookings.some((booking) => {
+    if (editingId && booking.id === editingId) return false;
+
     const existingStart = new Date(booking.startDate);
     const existingEnd = new Date(booking.endDate);
 
